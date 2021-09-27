@@ -1,4 +1,4 @@
-This is a Command Line Utility
+This is a Command Line Utility RPN Calculator
 
 Model -- Input.js
 
