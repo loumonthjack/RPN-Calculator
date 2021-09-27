@@ -12,7 +12,7 @@ Storage -- Storage.js
 
 Input Methods
 
- -- hasInvalid - return boolean, Input from Interface is Invalid
+ -- isInvalid - return boolean, Input from Interface is Invalid
  
  -- hasOperand - return boolean, Input from Interface has Operand Value
  
