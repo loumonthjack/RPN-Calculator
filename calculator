@@ -1,3 +1,4 @@
 #!/bin/bash
 
-node calculator.js
+node Interface.js
+
