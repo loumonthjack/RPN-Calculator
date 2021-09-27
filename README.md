@@ -40,7 +40,7 @@ Storage Object
  
  -- removeItems -- Removes from Space Array
  
- -- isInvalid -- Returns boolean, Storage has one or more Inputs
+ -- isInvalid -- Returns boolean, Storage Space has one or more Inputs
 
 
 
