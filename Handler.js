@@ -26,7 +26,7 @@ class Handler {
     };
 
     // This method returns the operations result based on the operator
-	operate(operatorValue, leftExpression, rightExpression){
+	getResult(operatorValue, leftExpression, rightExpression){
         const operations = { 
                 "*": function(){ return leftExpression * rightExpression},
                 "/": function(){ return leftExpression / rightExpression},
@@ -43,18 +43,18 @@ class Handler {
         // Input is the Data being processed
         const Input = this.InputCommand(this.input)
         // storage is the Storage(Array) being used for the Input 
-        const storage = this.space;
+        const Storage = this.space;
         
         // When Input is "h" return "Valid Commands..."
         const isHelpCommand = Input.value.includes('h') && 
         "Valid Commands: \n r or reset -- reset the storage \n q or quit -- quit the Calculator \n h or help -- view valid Commands \n v or view -- view current Calulation storage";
 
         // When Input is "r" or "reset", reset Storage space and return "storage has been emptied!"
-        const isResetCommand = (Input.value.includes('r') || Input.value.includes('reset')) && storage.resetSpace() && 'storage has been emptied!'
+        const isResetCommand = (Input.value.includes('r') || Input.value.includes('reset')) && Storage.resetSpace() && 'storage has been emptied!'
         // When Input is "q" or "quit", return "Quitting..."
         const isQuitCommand = (Input.value.includes('q') || Input.value.includes('quit')) && "Quitting..."
         // When Input is "v" or "view", return Storage space array
-        const isViewCommand = (Input.value.includes('v') || Input.value.includes('view')) && storage.space;
+        const isViewCommand = (Input.value.includes('v') || Input.value.includes('view')) && Storage.space;
 
         // When Input is Error return "Cannot Process! The Input is not Valid! Please Enter an Integer or Operator."
         const isError = Input.isError == true && "Cannot Process! The Input is not Valid! Please Enter an Integer or Operator.";
@@ -65,7 +65,7 @@ class Handler {
         const inputIsOperator = Input.isOperator == true;
 
         // Last Two Items from storage Array
-        const storageLastTwoItems = storage.space.slice(-2);
+        const storageLastTwoItems = Storage.space.slice(-2);
 
         // Last Item from storage
         const storageItemOne = storageLastTwoItems[0];
@@ -73,11 +73,11 @@ class Handler {
         const storageItemTwo = storageLastTwoItems[1];
         
         // function to add the Input Operands to storage Array
-        const processOperand = (validInput) => this.InputCommand(validInput).isOperand == true && storage.addItem(parseInt(validInput));
+        const processOperand = (validInput) => this.InputCommand(validInput).isOperand == true && Storage.addItem(parseInt(validInput));
         // function to use a Input Operator to calculate result of last two stored Input Operands 
-        const calculateTotal = (validInput) => this.operate(validInput, storage.removeItem(storageItemOne), storage.removeItem(storageItemTwo));
+        const calculateTotal = (validInput) => this.getResult(validInput, Storage.removeItem(storageItemOne), Storage.removeItem(storageItemTwo));
         // Add result of calculation to storage when storage has more than one operand else return "This answer is $RESULT
-        const processOperator = (validInput) => storage.space.length > 1 ? storage.addItem(calculateTotal(validInput)): !storage.space[1] && `Result: The answer is ${storage.space[0]}`;
+        const processOperator = (validInput) => Storage.space.length > 1 ? Storage.addItem(calculateTotal(validInput)): !Storage.space[1] && `Result: The answer is ${Storage.space[0]}`;
         
         // When there is multiple characters present in line process operands and operators
         // When single character process operator or operand
