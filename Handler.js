@@ -27,6 +27,7 @@ class Handler {
 
     // This method returns the operations result based on the operator
 	getResult(operatorValue, leftExpression, rightExpression){
+        //operators are keys and value returns operation expression result 
         const operations = { 
                 "*": function(){ return leftExpression * rightExpression},
                 "/": function(){ return leftExpression / rightExpression},

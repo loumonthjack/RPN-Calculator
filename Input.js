@@ -1,6 +1,4 @@
 // Representation of Incoming Data from Command Line
-
-// Input has a UserInput Command
 class Input {
 	constructor(value) {
 		this.value = value;
