@@ -8,22 +8,22 @@ const interface = readline.createInterface({
 	output: process.stdout
 });
 
-// Allowed Quit Command Line Executables
-const canExecute = (input) => {
-	const executable = {
-		"q": function(){return interface.close()},
-		"quit": function(){return interface.close()}
-	}
-	if(input in executable){
-		return executable[input]()
+// Allowed Interface Quit Commands 
+const closeInterface = (input) => {
+	// Quit commands
+	const executable = ["q", "quit"]
+
+	// if input is a executable array, close interface
+	if(executable.includes(input)){
+		return interface.close()
 	}
 }
 
-// Set Prompt for Command Line
+// Set Prompt for Interface
 interface.setPrompt('> ');
 interface.prompt(" ");
 
-// While Command Line is Open Create Calculator, Print Result and Execute Allowed Quit Commands
+// While Interface is Open, userInput is data
 interface.on('line', function(data){
 	try {
 		// Create Calulator 
@@ -31,16 +31,17 @@ interface.on('line', function(data){
 		// Print Result
 		console.log(Calculator.processInput())
 		// Execute Quit Commands
-		canExecute(data);
+		closeInterface(data);
 	} catch (e) {
+		// Print Error: $e in console
 		console.log("Error:", e);
 	}
 	interface.prompt()
 }).on('SIGINT', function () {
-	// CTRL+D Quit Command Line
+	// Close Interface
 	interface.close();
 }).on('close', function () {
-	// When Command Line receives Quit Command, Print Text and Close
+	// End gracefully. Print Text and Close Calculator CLI Process
 	console.log('Thanks for Using My RPN Calculator!');
 	process.exit(0);
 });

@@ -12,8 +12,8 @@ class Input {
 	}
 	// Input has a operand -- Boolean
 	hasOperand(value=this.value) {
-		const hasNumber = parseInt(value);
-		return isNaN(hasNumber) == false ? true : false;
+		const isNumber = parseInt(value);
+		return isNaN(isNumber) == true ? false : true;
 	}
 
 	// Input has multiple characters -- Boolean
@@ -21,7 +21,7 @@ class Input {
 		return (value && value.length > 1) ? true : false;  
 	};
 
-	// Input has not operand or operator  -- Boolean
+	// Input is invalid  -- Boolean
 	isInvalid(value=this.value) {
 		return this.hasOperand(value) == false && this.hasOperator(value) == false;
 	};

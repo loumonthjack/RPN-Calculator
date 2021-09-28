@@ -2,6 +2,7 @@ const { Input } = require('./Input');
 
 // Representation of Calculation Controller
 class Handler {
+
 	constructor(input, storage) {
 		this.input = input;
 		this.space = storage;
@@ -13,13 +14,13 @@ class Handler {
         const command = new Input(value);
         // input value -- string 
         const input = command.value;
-        // input is neither operator or operand -- boolean
+        // input has neither operator or operand -- boolean
         const error = command.isInvalid();
-        // input is a operand(integer) -- boolean
+        // input has a operand(integer) -- boolean
         const operand = command.hasOperand();
-        // input is a operator -- boolean
+        // input has a operator -- boolean
         const operator = command.hasOperator();
-        // input is multiple characters -- boolean
+        // input has multiple characters -- boolean
         const multi = command.hasMultiCharacter();
         return {isError: error, value: input, isOperand: operand , isOperator: operator, isMultiCharacter: multi};
     };
@@ -37,45 +38,49 @@ class Handler {
         if(operatorValue in operations) return operations[operatorValue]() 
     }
 
-    // This method uses the Validated Input, the Stash and returns the calculation results
+    // This method uses the Validated Input, the storage and returns the calculation results
     processInput(){
         // Input is the Data being processed
         const Input = this.InputCommand(this.input)
-        // Stash is the Storage(Array) being used for the Input 
-        const Stash = this.space;
+        // storage is the Storage(Array) being used for the Input 
+        const storage = this.space;
         
         // When Input is "h" return "Valid Commands..."
         const isHelpCommand = Input.value.includes('h') && 
-        "Valid Commands: \n m or manual -- how to work Calculator \n r or reset -- reset the Stash \n q or quit -- quit the Calculator \n h or help -- view valid Commands \n v or view -- view current Calulation Stash";
+        "Valid Commands: \n r or reset -- reset the storage \n q or quit -- quit the Calculator \n h or help -- view valid Commands \n v or view -- view current Calulation storage";
 
-        // When Input is "r" return 'Stash has been emptied!'
-        const isResetCommand = (Input.value.includes('r') || Input.value.includes('reset')) && Stash.resetSpace() && 'Stash has been emptied!'
+        // When Input is "r" or "reset", reset Storage space and return "storage has been emptied!"
+        const isResetCommand = (Input.value.includes('r') || Input.value.includes('reset')) && storage.resetSpace() && 'storage has been emptied!'
+        // When Input is "q" or "quit", return "Quitting..."
         const isQuitCommand = (Input.value.includes('q') || Input.value.includes('quit')) && "Quitting..."
-        const isViewCommand = (Input.value.includes('v') || Input.value.includes('view')) && Stash.space;
-        // When Input returns as error return "Cannot Process! The Input is not Valid! Please Enter an Integer or Operator."
+        // When Input is "v" or "view", return Storage space array
+        const isViewCommand = (Input.value.includes('v') || Input.value.includes('view')) && storage.space;
+
+        // When Input is Error return "Cannot Process! The Input is not Valid! Please Enter an Integer or Operator."
         const isError = Input.isError == true && "Cannot Process! The Input is not Valid! Please Enter an Integer or Operator.";
-        // When Input returns as multi character value remove the spaces and create array
+        // When Input is multi character value remove the spaces and create array
         const isMultiCharacter = Input.isMultiCharacter == true && Input.value.split(' ');
 
         // Input is a Operator
         const inputIsOperator = Input.isOperator == true;
-        // Remove Last Two Items from Stash Array
-        const getStashLastTwoItems = Stash.space.slice(-2);
 
-        // Last Item from Stash
-        const stashItemOne = getStashLastTwoItems[0];
-        // Second to Last Item from Stash
-        const stashItemTwo = getStashLastTwoItems[1];
+        // Last Two Items from storage Array
+        const storageLastTwoItems = storage.space.slice(-2);
+
+        // Last Item from storage
+        const storageItemOne = storageLastTwoItems[0];
+        // Second to Last Item from storage
+        const storageItemTwo = storageLastTwoItems[1];
         
-        // function to add the Input Operands to Stash Array
-        const processOperand = (validInput) => this.InputCommand(validInput).isOperand == true && Stash.addItem(parseInt(validInput));
+        // function to add the Input Operands to storage Array
+        const processOperand = (validInput) => this.InputCommand(validInput).isOperand == true && storage.addItem(parseInt(validInput));
         // function to use a Input Operator to calculate result of last two stored Input Operands 
-        const calculateTotal = (validInput) => this.operate(validInput, Stash.removeItem(stashItemOne), Stash.removeItem(stashItemTwo));
-        // Add result of calculation to stash when stash has more than one operand else return "This answer is $RESULT
-        const processOperator = (validInput) => Stash.space.length > 1 ? Stash.addItem(calculateTotal(validInput)): !Stash.space[1] && `Result: The answer is ${Stash.space[0]}`;
+        const calculateTotal = (validInput) => this.operate(validInput, storage.removeItem(storageItemOne), storage.removeItem(storageItemTwo));
+        // Add result of calculation to storage when storage has more than one operand else return "This answer is $RESULT
+        const processOperator = (validInput) => storage.space.length > 1 ? storage.addItem(calculateTotal(validInput)): !storage.space[1] && `Result: The answer is ${storage.space[0]}`;
         
-        // When there is multiple characters present in line process accordingly
-        // When single character process accordingly
+        // When there is multiple characters present in line process operands and operators
+        // When single character process operator or operand
         const result = !isError &&
                 isMultiCharacter ? isMultiCharacter.map(line => {
                     this.InputCommand(line).isOperator == true ? processOperator(line) : processOperand(line);
