@@ -1,6 +1,10 @@
 const readline = require("readline");
-const { Handler } = require('./Handler');
-const { Storage } = require('./Storage');
+const {
+	Handler
+} = require('./Handler');
+const {
+	Storage
+} = require('./Storage');
 
 // Create Command Line Interface
 const interface = readline.createInterface({
@@ -14,7 +18,7 @@ const closeInterface = (input) => {
 	const executable = ["q", "quit"]
 
 	// if input is a executable array, close interface
-	if(executable.includes(input)){
+	if (executable.includes(input)) {
 		return interface.close()
 	}
 }
@@ -24,7 +28,7 @@ interface.setPrompt('> ');
 interface.prompt(" ");
 
 // While Interface is Open, userInput is data
-interface.on('line', function(data){
+interface.on('line', function (data) {
 	try {
 		// Create Calulator 
 		const Calculator = new Handler(data, Storage);
@@ -45,5 +49,3 @@ interface.on('line', function(data){
 	console.log('Thanks for Using My RPN Calculator!');
 	process.exit(0);
 });
-
-
