@@ -58,18 +58,18 @@ class Handler {
     // This method uses the Validated Input, the storage and returns the calculation results
     processInput() {
         // Input is the Data being processed
-        const Input = this.InputCommand(this.input)
+        const Input = this.InputCommand(this.input);
         // storage is the Storage(Array) being used for the Input 
         const Storage = this.space;
 
         // When Input is "h" or "help"
-        const helpCommand = Input.value.includes("h") || Input.value.includes("help")
+        const helpCommand = Input.value.includes("h") || Input.value.includes("help");
         // When Input is "r" or "reset"
-        const resetCommand = Input.value.includes("r") || Input.value.includes("reset")
+        const resetCommand = Input.value.includes("r") || Input.value.includes("reset");
         // When Input is "q" or "quit"
-        const quitCommand = Input.value.includes("q") || Input.value.includes("quit")
+        const quitCommand = Input.value.includes("q") || Input.value.includes("quit");
         // When Input is "v" or "view"
-        const viewCommand = Input.value.includes("v") || Input.value.includes("view")
+        const viewCommand = Input.value.includes("v") || Input.value.includes("view");
         // When Input is "t" or "test"
         const testCommand = Input.value.includes("t") || Input.value.includes("test");
 
@@ -91,7 +91,7 @@ class Handler {
         // If Value is "t" or "test"
         if (testCommand) {
             // if only "t" return prompt
-            if (Input.isOperand == false & Input.isOperator == false) {
+            if (Input.isOperand === false & Input.isOperator === false) {
                 return "Try:\n \n(Operand and/or Operator) test\n \nExample: 2 3 4 test";
             }
             // return input object table and storage object table
@@ -102,7 +102,7 @@ class Handler {
         if (viewCommand) return Storage.space;
 
         // If Value is "q" or "quit" return prompt
-        if (quitCommand) return "Quitting..."
+        if (quitCommand) return "Quitting...";
 
         // If Value is "h" or "help" return prompt
         if (helpCommand) return "Valid Commands: \n r or reset -- reset the storage \n q or quit -- quit the Calculator \n h or help -- view valid Commands \n v or view -- view current Calulation storage \n t or test -- test Input and Storage";
@@ -114,7 +114,7 @@ class Handler {
         if (Input.isError == true) return "Cannot Process! The Input is not Valid! Please Enter an Integer or Operator.";
 
         // If Multi Character Input
-        if (Input.isMultiCharacter == true) {
+        if (Input.isMultiCharacter === true) {
             // strip the input of spaces and return values as array
             const multiCharacter = Input.value.split(" ");
 
