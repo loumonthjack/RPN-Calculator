@@ -42,9 +42,9 @@ Storage Object
  
  -- isInvalid -- Returns boolean, Storage Space has one or more Inputs
  
-Why this approach? I wanted to decouple the Interface, Compute and Storage of the Calculator. 
+Why this approach? 
 
-As a web dev.. I thought the interface as browser, handler as server, and storage as db.. Can't forget the input is the data.
+As a web developer.. I thought the interface as browser, handler as server, and storage as db.. Can't forget the input as the data.
 
 Had more time? Write using Typescript and Jest Testing.
 
