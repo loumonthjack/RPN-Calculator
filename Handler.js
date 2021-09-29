@@ -1,6 +1,6 @@
 const {
     Input
-} = require('./Input');
+} = require("./Input");
 
 // Representation of Calculation Controller
 class Handler {
@@ -62,24 +62,16 @@ class Handler {
         // storage is the Storage(Array) being used for the Input 
         const Storage = this.space;
 
-        // When Input is "h" return "Valid Commands..."
-        const isHelpCommand = Input.value.includes('h') &&
-            "Valid Commands: \n r or reset -- reset the storage \n q or quit -- quit the Calculator \n h or help -- view valid Commands \n v or view -- view current Calulation storage";
-
-        // When Input is "r" or "reset", reset Storage space and return "storage has been emptied!"
-        const isResetCommand = (Input.value.includes('r') || Input.value.includes('reset')) && Storage.resetSpace() && 'storage has been emptied!'
-        // When Input is "q" or "quit", return "Quitting..."
-        const isQuitCommand = (Input.value.includes('q') || Input.value.includes('quit')) && "Quitting..."
-        // When Input is "v" or "view", return Storage space array
-        const isViewCommand = (Input.value.includes('v') || Input.value.includes('view')) && Storage.space;
-
-        // When Input is Error return "Cannot Process! The Input is not Valid! Please Enter an Integer or Operator."
-        const isError = Input.isError == true && "Cannot Process! The Input is not Valid! Please Enter an Integer or Operator.";
-        // When Input is multi character value remove the spaces and create array
-        const isMultiCharacter = Input.isMultiCharacter == true;
-
-        // Input is a Operator
-        const inputIsOperator = Input.isOperator == true;
+        // When Input is "h" or "help"
+        const helpCommand = Input.value.includes("h") || Input.value.includes("help")
+        // When Input is "r" or "reset"
+        const resetCommand = Input.value.includes("r") || Input.value.includes("reset") 
+        // When Input is "q" or "quit"
+        const quitCommand = Input.value.includes("q") || Input.value.includes("quit")
+        // When Input is "v" or "view"
+        const viewCommand = Input.value.includes("v") || Input.value.includes("view")
+        // When Input is "t" or "test"
+        const testCommand = Input.value.includes("t") || Input.value.includes("test");
 
         // Last Two Items from storage Array
         const storageLastTwoItems = Storage.space.slice(-2);
@@ -92,28 +84,39 @@ class Handler {
         // function to add the Input Operands to storage Array
         const processOperand = (validInput) => this.InputCommand(validInput).isOperand == true && Storage.addItem(parseInt(validInput));
         // function to use a Input Operator to calculate result of last two stored Input Operands 
-        const calculateTotal = (validInput) => (storageItemOne && storageItemTwo) ? this.getResult(validInput, Storage.removeItem(storageItemOne), Storage.removeItem(storageItemTwo)) : `Cannot Operate on One Operand`;
+        const calculateTotal = (validInput) => (storageItemOne && storageItemTwo) ? this.getResult(validInput, Storage.removeItem(storageItemOne), Storage.removeItem(storageItemTwo)) : "Cannot Operate on One Operand";
         // Add result of calculation to storage when storage has more than one operand else return "This answer is $RESULT
         const processOperator = (validInput) => Storage.space.length > 1 ? Storage.addItem(calculateTotal(validInput)) : !Storage.space[1] && `Result: The answer is ${Storage.space[0]}`;
-        // If Value is "v" or "view"
-        if (isViewCommand) return isViewCommand
+        
+        // If Value is "t" or "test"
+        if (testCommand){ 
+            // if only "t" return prompt
+            if(Input.isOperand == false & Input.isOperator == false){ 
+                return "Try:\n \n(Operand and/or Operator) test\n \nExample: 2 3 4 test";
+            }
+            // return input object table and storage object table
+            return console.table(Input) & console.table(Storage);
+        }
 
-        // If Value is "q" or "quit"
-        if (isQuitCommand) return isQuitCommand
+        // If Value is "v" or "view" return storage array
+        if (viewCommand) return Storage.space;
 
-        // If Value is "h" or "help" 
-        if (isHelpCommand) return isHelpCommand
+        // If Value is "q" or "quit" return prompt
+        if (quitCommand) return "Quitting..."
 
-        // If Value is "r" or "reset"
-        if (isResetCommand) return isResetCommand
+        // If Value is "h" or "help" return prompt
+        if (helpCommand) return "Valid Commands: \n r or reset -- reset the storage \n q or quit -- quit the Calculator \n h or help -- view valid Commands \n v or view -- view current Calulation storage \n t or test -- test Input and Storage";
 
-        // If Error 
-        if (isError) return isError
+        // If Value is "r" or "reset", then reset storage array and return prompt
+        if (resetCommand) return Storage.resetSpace() && "storage has been emptied!";
+
+        // If Error return prompt
+        if (Input.isError == true) return "Cannot Process! The Input is not Valid! Please Enter an Integer or Operator.";
 
         // If Multi Character Input
-        if (isMultiCharacter == true) {
+        if (Input.isMultiCharacter == true) {
             // strip the input of spaces and return values as array
-            const multiCharacter = Input.value.split(' ');
+            const multiCharacter = Input.value.split(" ");
 
             // operators get stored here
             const operatorArray = [];
@@ -140,7 +143,7 @@ class Handler {
             return result;
         }
         // Single Input 
-        const result = inputIsOperator ? processOperator(Input.value) : processOperand(Input.value);
+        const result = Input.isOperator == true ? processOperator(Input.value) : processOperand(Input.value);
         if (result) return result;
 
     }
