@@ -1,4 +1,4 @@
-This is a Command Line Utility RPN Calculator
+Reverse Polish Notation Calculator
 
 Model -- Input.js
 
@@ -41,8 +41,12 @@ Storage Object
  -- removeItems -- Removes from Space Array
  
  -- isInvalid -- Returns boolean, Storage Space has one or more Inputs
+ 
+Why this approach? 
 
+As a web developer.. I thought the interface as browser, handler as server, and storage as db.. Can't forget the input as the data.
 
+Had more time? Write using Typescript and Jest Testing.
 
 To Start Project: 
 
