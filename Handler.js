@@ -60,7 +60,7 @@ class Handler {
         // When Input is Error return "Cannot Process! The Input is not Valid! Please Enter an Integer or Operator."
         const isError = Input.isError == true && "Cannot Process! The Input is not Valid! Please Enter an Integer or Operator.";
         // When Input is multi character value remove the spaces and create array
-        const isMultiCharacter = Input.isMultiCharacter == true && Input.value.split(' ');
+        const isMultiCharacter = Input.isMultiCharacter == true;
 
         // Input is a Operator
         const inputIsOperator = Input.isOperator == true;
@@ -76,17 +76,9 @@ class Handler {
         // function to add the Input Operands to storage Array
         const processOperand = (validInput) => this.InputCommand(validInput).isOperand == true && Storage.addItem(parseInt(validInput));
         // function to use a Input Operator to calculate result of last two stored Input Operands 
-        const calculateTotal = (validInput) => this.getResult(validInput, Storage.removeItem(storageItemOne), Storage.removeItem(storageItemTwo));
+        const calculateTotal = (validInput) => (storageItemOne && storageItemTwo) ? this.getResult(validInput, Storage.removeItem(storageItemOne), Storage.removeItem(storageItemTwo)) : `Cannot Operate on One Operand`;
         // Add result of calculation to storage when storage has more than one operand else return "This answer is $RESULT
         const processOperator = (validInput) => Storage.space.length > 1 ? Storage.addItem(calculateTotal(validInput)): !Storage.space[1] && `Result: The answer is ${Storage.space[0]}`;
-        
-        // When there is multiple characters present in line process operands and operators
-        // When single character process operator or operand
-        const result = !isError &&
-                isMultiCharacter ? isMultiCharacter.map(line => {
-                    this.InputCommand(line).isOperator == true ? processOperator(line) : processOperand(line);
-                    }) : (inputIsOperator == true ? processOperator(Input.value) : processOperand(Input.value));
-
         // If Value is "v" or "view"
         if(isViewCommand) return isViewCommand
 
@@ -101,9 +93,37 @@ class Handler {
 
         // If Error 
         if(isError) return isError
+            
+        // If Multi Character Input
+        if(isMultiCharacter == true){
+                // strip the input of spaces and return values as array
+                const multiCharacter = Input.value.split(' ');
+
+                // operators get stored here
+                const operatorArray = [];
+
+                // When there is multiple characters present in line process operands and push operators to operatorsArray
+                multiCharacter.map(line => {
+                            this.InputCommand(line).isOperand == true ? processOperand(parseInt(line)) : (this.InputCommand(line).isOperator == true && operatorArray.push(line));
+                            }) && Input.value;
+
+                // calculate input result then return result            
+                const result = operatorArray.map(operator => {
+                    // Last Two Items from storage Array
+                    const storageLastTwoItems = Storage.space.slice(-2);
+                    // Last Item from storage
+                    const storageItemOne = storageLastTwoItems[0];
+                    // Second to Last Item from storage
+                    const storageItemTwo = storageLastTwoItems[1];
+                    // process result
+                    processOperand(this.getResult(operator, Storage.removeItem(storageItemOne), Storage.removeItem(storageItemTwo)))
+                }) && Storage.space.at(-1);
+                return result;
+        }
+        // Single Input 
+        const result = (inputIsOperator == true ? processOperator(Input.value) : processOperand(Input.value));
+        if(result) return result;
         
-        // If Result
-        if(result)return result;
 	}
     
 }

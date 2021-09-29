@@ -18,7 +18,7 @@ Input Methods
  
  -- hasOperator - return boolean, Input from Interface has Operator value
  
- -- hasMultCharacter - return boolean, Input from Interface has multiple character
+ -- hasMultiCharacter - return boolean, Input from Interface has multiple character
 
 
 
