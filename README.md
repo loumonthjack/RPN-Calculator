@@ -1,4 +1,4 @@
-This is a Command Line Utility RPN Calculator
+Reverse Polish Notation Calculator
 
 Model -- Input.js
 
