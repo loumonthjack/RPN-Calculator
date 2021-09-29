@@ -55,7 +55,7 @@ class Handler {
         if (operatorValue in operations) return operations[operatorValue]()
     }
 
-    // This method uses the Validated Input, the storage and returns the calculation results
+    // This method uses the Validated Input, the storage and returns results
     processInput() {
         // Input is the Data being processed
         const Input = this.InputCommand(this.input);
@@ -84,7 +84,7 @@ class Handler {
         // function to add the Input Operands to storage Array
         const processOperand = (validInput) => this.InputCommand(validInput).isOperand == true && Storage.addItem(parseInt(validInput));
         // function to use a Input Operator to calculate result of last two stored Input Operands 
-        const calculateTotal = (validInput) => (storageItemOne && storageItemTwo) ? this.getResult(validInput, Storage.removeItem(storageItemOne), Storage.removeItem(storageItemTwo)) : "Cannot Operate on One Operand";
+        const calculateTotal = (validInput) => this.getResult(validInput, Storage.removeItem(storageItemOne), Storage.removeItem(storageItemTwo));
         // Add result of calculation to storage when storage has more than one operand else return "This answer is $RESULT
         const processOperator = (validInput) => Storage.space.length > 1 ? Storage.addItem(calculateTotal(validInput)) : !Storage.space[1] && `Result: The answer is ${Storage.space[0]}`;
 
@@ -122,9 +122,9 @@ class Handler {
             const operatorArray = [];
 
             // When there is multiple characters present in line process operands and push operators to operatorsArray
-            multiCharacter.map(line => {
-                this.InputCommand(line).isOperand == true ? processOperand(parseInt(line)) : (this.InputCommand(line).isOperator == true && operatorArray.push(line));
-            }) && Input.value;
+            multiCharacter.map(character => {
+                this.InputCommand(character).isOperand == true ? processOperand(parseInt(character)) : (this.InputCommand(character).isOperator == true && operatorArray.push(character));
+            });
 
             // calculate input result then return result            
             const result = operatorArray.map(operator => {
@@ -135,7 +135,7 @@ class Handler {
                 // Second to Last Item from storage
                 const storageItemTwo = storageLastTwoItems[1];
                 // calculate result
-                const calculation = this.getResult(operator, Storage.removeItem(storageItemOne), Storage.removeItem(storageItemTwo))
+                const calculation = this.getResult(operator, Storage.removeItem(storageItemOne), Storage.removeItem(storageItemTwo));
 
                 // process result
                 processOperand(calculation)
