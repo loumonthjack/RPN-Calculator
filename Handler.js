@@ -65,7 +65,7 @@ class Handler {
         // When Input is "h" or "help"
         const helpCommand = Input.value.includes("h") || Input.value.includes("help")
         // When Input is "r" or "reset"
-        const resetCommand = Input.value.includes("r") || Input.value.includes("reset") 
+        const resetCommand = Input.value.includes("r") || Input.value.includes("reset")
         // When Input is "q" or "quit"
         const quitCommand = Input.value.includes("q") || Input.value.includes("quit")
         // When Input is "v" or "view"
@@ -87,11 +87,11 @@ class Handler {
         const calculateTotal = (validInput) => (storageItemOne && storageItemTwo) ? this.getResult(validInput, Storage.removeItem(storageItemOne), Storage.removeItem(storageItemTwo)) : "Cannot Operate on One Operand";
         // Add result of calculation to storage when storage has more than one operand else return "This answer is $RESULT
         const processOperator = (validInput) => Storage.space.length > 1 ? Storage.addItem(calculateTotal(validInput)) : !Storage.space[1] && `Result: The answer is ${Storage.space[0]}`;
-        
+
         // If Value is "t" or "test"
-        if (testCommand){ 
+        if (testCommand) {
             // if only "t" return prompt
-            if(Input.isOperand == false & Input.isOperator == false){ 
+            if (Input.isOperand == false & Input.isOperator == false) {
                 return "Try:\n \n(Operand and/or Operator) test\n \nExample: 2 3 4 test";
             }
             // return input object table and storage object table
