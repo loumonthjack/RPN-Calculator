@@ -115,8 +115,11 @@ class Handler {
                     const storageItemOne = storageLastTwoItems[0];
                     // Second to Last Item from storage
                     const storageItemTwo = storageLastTwoItems[1];
+                    // calculate result
+                    const calculation = this.getResult(operator, Storage.removeItem(storageItemOne), Storage.removeItem(storageItemTwo))
+                    
                     // process result
-                    processOperand(this.getResult(operator, Storage.removeItem(storageItemOne), Storage.removeItem(storageItemTwo)))
+                    processOperand(calculation)
                 }) && Storage.space.at(-1);
                 return result;
         }
