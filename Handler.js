@@ -139,7 +139,7 @@ class Handler {
 
                 // process result
                 processOperand(calculation)
-            }) && Storage.space.at(-1);
+            }) && Storage.space.slice(-1)[0];
             return result;
         }
         // Single Input 
