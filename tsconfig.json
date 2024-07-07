@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "rootDir": "./cli",
+        "outDir": "./dist",
+        "target": "ES2022",
+        "lib": [
+            "ES2022"
+        ],
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "declaration": true,
+    },
+    "include": [
+        "cli/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

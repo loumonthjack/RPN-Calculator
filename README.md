@@ -1,59 +1,48 @@
-Reverse Polish Notation Calculator
+# Reverse Polish Notation Calculator
 
-Model -- Input.js
+This project implements a Reverse Polish Notation (RPN) Calculator. It is designed with a clear separation of concerns in mind, mimicking the MVC (Model-View-Controller) architecture pattern in Command Line Interface. The calculator is capable of handling basic arithmetic operations in reverse Polish notation.
 
-View -- Interface.js
+## Architecture
 
-Controller -- Handler.js
+- **Model**: Responsible for the data-related logic. In this project, the model is represented by the `Input` class, which validates and processes the input.
+- **View**: Manages the user interface. This role is played by the `Interface` class, which handles all interactions with the user through the command line.
+- **Controller**: Acts as an intermediary between the Model and View, controlling the data flow into the model object and updates the view whenever data changes. It is implemented in the `Handler` class.
+- **Storage**: A simple storage mechanism to keep track of the current state. The `Storage` class provides methods to manipulate this storage.
 
-Storage -- Storage.js
+## Features
 
+- **Input Validation**: Checks if the input from the user is valid.
+- **Arithmetic Operations**: Supports basic arithmetic operations including addition, subtraction, multiplication, and division.
+- **Command Line Interface**: A simple and interactive CLI to perform calculations and manage the application state.
 
+## Commands
 
-Input Methods
+- `r` or `reset`: Resets the storage, clearing all stored data.
+- `q` or `quit`: Quits the Calculator application.
+- `h` or `help`: Displays valid commands.
+- `v` or `view`: Views current calculation storage.
+- `t` or `test`: Test input and storage (not implemented).
 
- -- isInvalid - return boolean, Input from Interface is Invalid
- 
- -- hasOperand - return boolean, Input from Interface has Operand Value
- 
- -- hasOperator - return boolean, Input from Interface has Operator value
- 
- -- hasMultiCharacter - return boolean, Input from Interface has multiple character
+## Getting Started
 
+To start using the RPN Calculator, follow these steps:
 
+1. Ensure you have Node.js installed on your system.
+2. Clone this repository to your local machine.
+3. Navigate to the project directory and install dependencies:
 
-Handler Methods 
+```sh
+npm install
+```
 
- -- InputCommand - Validates the Input from Interface
- 
- -- operate - Calculate Result based on Operator Value of Input from Interface 
- 
- -- processInput - Return Result of Input based a Multi/Single Char.
+4. Run the application:
 
+```sh
+npm start
+```
 
+5. Follow the on-screen instructions to perform calculations.
+```sh
+> help
+```
 
-Storage Object
-
- -- space - This is Where Input is Stored 
- 
- -- addItems -- Adds to Space Array
- 
- -- removeItems -- Removes from Space Array
- 
- -- isInvalid -- Returns boolean, Storage Space has one or more Inputs
- 
-Why this approach? 
-
-As a web developer.. I thought the interface as browser, handler as server, and storage as db.. Can't forget the input as the data.
-
-Had more time? Write using Typescript and Jest Testing.
-
-To Start Project: 
-
-sh ./calculator
-
-
-
-Need Help? 
-
-See Valid Commands by entering "h" or "help".

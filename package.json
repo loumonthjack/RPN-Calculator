@@ -1,0 +1,15 @@
+{
+  "name": "rpn-calculator",
+  "version": "1.0.0",
+  "description": "Reverse Polish Notation Calculator",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node cli/index.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ts-node": "^10.9.2"
+  }
+}
