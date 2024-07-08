@@ -1,35 +1,17 @@
-import readline from "readline";
 import Handler from "./handler";
 import Storage from "./storage";
 
-const rl = readline.createInterface({
-	input: process.stdin,
-	output: process.stdout,
-});
-
-const quitCommands = ["q", "quit"];
-
-rl.setPrompt("> ");
-rl.prompt(" " as any);
-
-rl.on("line", (input: string) => {
+const initialize = (input: string): string | void => {
 	try {
-		const calculator = new Handler(input, Storage.space);
+		const reservedStorage = Storage.getSpace();
+		const calculator = new Handler(input, reservedStorage);
 		const result = calculator.processInput();
-		if (result) console.log(result);
-
-		if (quitCommands.includes(input.toLowerCase())) {
-			rl.close();
-		}
+		if (result) return result.toString();
 	} catch (error) {
-		console.error("Error:", error);
+		throw new Error(`Error: ${error}`);
 	}
-	rl.prompt();
-});
+};
 
-rl.on("SIGINT", () => rl.close());
-
-rl.on("close", () => {
-	console.log("Thanks for using my RPN Calculator!");
-	process.exit(0);
-});
+export default {
+	initialize,
+}

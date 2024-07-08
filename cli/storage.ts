@@ -1,24 +1,27 @@
-let space: number[] = [];
-const resetSpace = () => {
-    space = [];
-    return []
-}
-const addItem = (value: number) => {
-    space.push(value);
-    return value
-}
-const removeItem = (value: number) => {
-    space.pop();
-    return value
-}
-const isInvalid = () => {
-    return space.length <= 1
-}
+class Stack {
+    private space: number[] = [];
 
-export default {
-    space,
-    resetSpace,
-    addItem,
-    removeItem,
-    isInvalid
+    resetSpace(): number[] {
+        this.space = [];
+        return this.space;
+    }
+
+    addItem(value: number): number {
+        this.space.push(value);
+        return value;
+    }
+
+    removeItem(): number | undefined {
+        return this.space.pop();
+    }
+
+    isInvalid(): boolean {
+        return this.space.length <= 1;
+    }
+
+    getSpace(): number[] {
+        return this.space;
+    }
 }
+const storage = new Stack();
+export default storage;

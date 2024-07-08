@@ -3,7 +3,7 @@ import Input from "./input";
 import { Operator, InputCommandResult } from "./types";
 
 export default class Handler {
-  constructor(public input: string, private space: number[] = []) { }
+  constructor(public input: string, public space: number[] = []) { }
 
   private inputCommand(value: string): InputCommandResult {
     const command = new Input(value);
@@ -29,8 +29,6 @@ export default class Handler {
       help: () => this.showHelp(),
       r: () => this.resetSpace(),
       reset: () => this.resetSpace(),
-      q: () => "Quitting...",
-      quit: () => "Quitting...",
       v: () => this.space.join(" "),
       view: () => this.space.join(" "),
       t: () => this.runTest(),
@@ -54,13 +52,13 @@ export default class Handler {
 
     if (input.isOperand) {
       this.space.push(parseInt(input.value as string));
-      return undefined;
+      return parseInt(input.value as string);
     }
 
     return undefined;
   }
 
-  private showHelp(): string {
+  showHelp(): string {
     return `Valid Commands:
  r or reset -- reset the storage
  q or quit -- quit the Calculator
