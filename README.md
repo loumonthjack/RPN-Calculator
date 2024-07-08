@@ -40,9 +40,18 @@ npm install
 ```sh
 npm start
 ```
+5. Run test suite:
 
-5. Follow the on-screen instructions to perform calculations.
+```sh
+npm test
+```
+
+6. Follow the on-screen instructions to perform calculations.
 ```sh
 > help
+```
+7. To quit the application, type `q` or `quit`.
+```sh
+> q
 ```
 
