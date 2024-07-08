@@ -27,7 +27,7 @@ This project implements a Reverse Polish Notation (RPN) Calculator. It is design
 
 To start using the RPN Calculator, follow these steps:
 
-1. Ensure you have Node.js installed on your system.
+1. Ensure you have Node(+20 version recommended) installed on your system.
 2. Clone this repository to your local machine.
 3. Navigate to the project directory and install dependencies:
 
