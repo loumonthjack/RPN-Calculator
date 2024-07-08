@@ -46,12 +46,3 @@ npm start
 npm test
 ```
 
-6. Follow the on-screen instructions to perform calculations.
-```sh
-> help
-```
-7. To quit the application, type `q` or `quit`.
-```sh
-> q
-```
-
