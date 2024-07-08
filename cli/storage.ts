@@ -1,17 +1,19 @@
 class Stack {
     private space: number[] = [];
+    public size: number = this.space.length;
 
-    resetSpace(): number[] {
+    reset(): number[] {
         this.space = [];
         return this.space;
     }
 
-    addItem(value: number): number {
+    add(value: number): number {
         this.space.push(value);
         return value;
     }
 
-    removeItem(): number | undefined {
+
+    remove(): number | undefined {
         return this.space.pop();
     }
 
@@ -19,7 +21,7 @@ class Stack {
         return this.space.length <= 1;
     }
 
-    getSpace(): number[] {
+    get(): number[] {
         return this.space;
     }
 }

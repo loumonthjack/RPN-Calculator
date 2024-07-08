@@ -3,8 +3,8 @@ import Storage from "./storage";
 
 const initialize = (input: string): string | void => {
 	try {
-		const reservedStorage = Storage.getSpace();
-		const calculator = new Handler(input, reservedStorage);
+		const memory = Storage.get();
+		const calculator = new Handler(input, memory);
 		const result = calculator.processInput();
 		if (result) return result.toString();
 	} catch (error) {
